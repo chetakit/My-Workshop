@@ -128,7 +128,7 @@
 
 ## Screenshot SourceTree
 
-![IMG] (img/Sourcetree commit.jpg)
+![SourceTree Commit](img/Sourcetree commit.jpg)
 
 ## System Architecture
 
