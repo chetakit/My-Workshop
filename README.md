@@ -50,3 +50,24 @@ This project is an e-commerce website for selling computer hardware and gaming a
 - (Member 2)
 - (Member 3)
 - (Member 4)
+
+## Analysis
+
+### Problem Statement
+
+Customers often have difficulty searching for computer hardware and gaming accessories from multiple sources. Therefore, this project aims to provide a centralized online shopping platform.
+
+### Functional Requirements
+
+- User Registration
+- User Login
+- Product Search
+- Shopping Cart
+- Place Orders
+- Admin Management
+
+### Non-functional Requirements
+
+- Easy to use
+- Fast response
+- Responsive Design
