@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechShop — Computer & Gaming Gear</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS & BASE
+    ============================================================ */
+    :root {
+      --primary:       #0055FF;
+      --primary-dark:  #0033CC;
+      --primary-light: #3377FF;
+      --accent:        #00C8FF;
+      --dark:          #0A0E1A;
+      --dark-2:        #111827;
+      --dark-3:        #1F2937;
+      --mid:           #374151;
+      --grey:          #6B7280;
+      --light:         #F3F4F6;
+      --white:         #FFFFFF;
+      --success:       #10B981;
+      --warning:       #F59E0B;
+      --danger:        #EF4444;
+      --border:        #E5E7EB;
+      --radius:        12px;
+      --radius-sm:     8px;
+      --shadow:        0 4px 24px rgba(0,0,0,.08);
+      --shadow-lg:     0 8px 40px rgba(0,0,0,.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #FAFAFA;
+      color: var(--dark-2);
+      overflow-x: hidden;
+    }
+
+    h1,h2,h3,h4,h5,h6 { font-family: 'Inter', sans-serif; }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--dark);
+      position: relative;
+      padding-bottom: .6rem;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 48px; height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #mainNav {
+      background: rgba(10,14,26,.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: box-shadow .3s;
+    }
+    #mainNav.scrolled { box-shadow: 0 2px 32px rgba(0,85,255,.18); }
+
+    .navbar-brand {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: .5px;
+      color: var(--white) !important;
+    }
+    .navbar-brand span { color: var(--accent); }
+
+    .nav-link {
+      color: rgba(255,255,255,.8) !important;
+      font-size: .88rem;
+      font-weight: 500;
+      letter-spacing: .3px;
+      padding: .5rem .85rem !important;
+      border-radius: var(--radius-sm);
+      transition: color .2s, background .2s;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--white) !important;
+      background: rgba(255,255,255,.08);
+    }
+
+    .btn-nav-login {
+      background: var(--primary);
+      color: var(--white) !important;
+      border-radius: 50px;
+      padding: .38rem 1.2rem !important;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: background .2s, transform .15s;
+    }
+    .btn-nav-login:hover {
+      background: var(--primary-light);
+      transform: translateY(-1px);
+    }
+
+    .cart-badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .cart-badge .badge-count {
+      position: absolute;
+      top: -6px; right: -8px;
+      background: var(--danger);
+      color: var(--white);
+      border-radius: 50%;
+      width: 16px; height: 16px;
+      font-size: .6rem;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+    }
+
+    /* ============================================================
+       HERO BANNER
+    ============================================================ */
+    #hero {
+      background: linear-gradient(135deg, #0A0E1A 0%, #0D1B3E 40%, #001166 80%, #0033AA 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(0,200,255,.12) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 80%, rgba(0,85,255,.15) 0%, transparent 50%);
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,85,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,85,255,.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(0,200,255,.15) 0%, transparent 70%);
+      top: 50%; right: 5%; transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: .75rem;
+    }
+    .hero-headline {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.08;
+      margin-bottom: 1.25rem;
+    }
+    .hero-headline .accent { color: var(--accent); }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.65);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+    .btn-hero-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      padding: .85rem 2.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: .3px;
+      transition: opacity .2s, transform .2s, box-shadow .2s;
+      box-shadow: 0 8px 28px rgba(0,85,255,.35);
+    }
+    .btn-hero-primary:hover {
+      opacity: .9; transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(0,85,255,.45);
+      color: var(--white);
+    }
+    .btn-hero-secondary {
+      background: transparent;
+      color: rgba(255,255,255,.85);
+      border: 1.5px solid rgba(255,255,255,.25);
+      border-radius: 50px;
+      padding: .85rem 2.2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all .2s;
+    }
+    .btn-hero-secondary:hover {
+      border-color: rgba(255,255,255,.55);
+      color: var(--white);
+      background: rgba(255,255,255,.06);
+    }
+    .hero-stat {
+      border-left: 2px solid rgba(255,255,255,.12);
+      padding-left: 1.25rem;
+    }
+    .hero-stat .num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+    .hero-stat .lbl {
+      font-size: .75rem;
+      color: rgba(255,255,255,.5);
+      margin-top: .2rem;
+    }
+    .hero-product-img {
+      max-width: 520px;
+      width: 100%;
+      filter: drop-shadow(0 24px 64px rgba(0,100,255,.4));
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-18px); }
+    }
+
+    /* ============================================================
+       TICKER / PROMO BAR
+    ============================================================ */
+    .promo-bar {
+      background: var(--primary);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: .55rem 0;
+    }
+    .promo-bar-inner {
+      display: inline-block;
+      animation: ticker 30s linear infinite;
+    }
+    .promo-bar-inner span {
+      font-size: .82rem;
+      font-weight: 500;
+      color: rgba(255,255,255,.92);
+      letter-spacing: .3px;
+      padding: 0 3rem;
+    }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ============================================================
+       CATEGORIES
+    ============================================================ */
+    .cat-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+    }
+    .cat-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 6px 24px rgba(0,85,255,.1);
+      transform: translateY(-4px);
+    }
+    .cat-card .cat-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, #EEF2FF, #DBEAFE);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 1.5rem;
+      color: var(--primary);
+      transition: background .2s;
+    }
+    .cat-card:hover .cat-icon { background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--white); }
+    .cat-card .cat-name { font-size: .88rem; font-weight: 600; color: var(--dark-2); }
+    .cat-card .cat-count { font-size: .75rem; color: var(--grey); margin-top: .2rem; }
+
+    /* ============================================================
+       SEARCH & FILTER BAR
+    ============================================================ */
+    .filter-bar {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .filter-bar .form-control,
+    .filter-bar .form-select {
+      border-color: var(--border);
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+      height: 42px;
+    }
+    .filter-bar .form-control:focus,
+    .filter-bar .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0,85,255,.1);
+    }
+    .btn-search {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0 1.4rem;
+      height: 42px;
+      font-weight: 600;
+      font-size: .9rem;
+      transition: background .2s;
+    }
+    .btn-search:hover { background: var(--primary-dark); color: var(--white); }
+
+    /* ============================================================
+       PRODUCT CARDS
+    ============================================================ */
+    .product-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow .25s, transform .25s, border-color .25s;
+      position: relative;
+    }
+    .product-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-5px);
+      border-color: rgba(0,85,255,.2);
+    }
+    .product-img-wrap {
+      background: linear-gradient(135deg, #F0F4FF, #E8EEFF);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .product-img-wrap img {
+      max-height: 160px;
+      object-fit: contain;
+      transition: transform .3s;
+    }
+    .product-card:hover .product-img-wrap img { transform: scale(1.07); }
+    .product-badge {
+      position: absolute;
+      top: .75rem; left: .75rem;
+      border-radius: 50px;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .3px;
+      padding: .28rem .75rem;
+      text-transform: uppercase;
+    }
+    .badge-sale { background: var(--danger); color: var(--white); }
+    .badge-new  { background: var(--success); color: var(--white); }
+    .badge-hot  { background: var(--warning); color: var(--white); }
+
+    .btn-wishlist {
+      position: absolute;
+      top: .75rem; right: .75rem;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--grey);
+      cursor: pointer;
+      transition: color .2s, background .2s;
+      font-size: .9rem;
+    }
+    .btn-wishlist:hover, .btn-wishlist.active { color: var(--danger); background: #FEE2E2; border-color: #FCA5A5; }
+
+    .product-body { padding: 1.1rem 1.1rem .5rem; }
+    .product-brand { font-size: .72rem; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: .25rem; }
+    .product-name  { font-size: .9rem; font-weight: 600; color: var(--dark-2); margin-bottom: .5rem; line-height: 1.4; }
+
+    .stars { color: var(--warning); font-size: .8rem; }
+    .rating-count { font-size: .72rem; color: var(--grey); margin-left: .3rem; }
+
+    .product-price-wrap { margin-top: .6rem; }
+    .price-current {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .price-original {
+      font-size: .82rem;
+      color: var(--grey);
+      text-decoration: line-through;
+      margin-left: .4rem;
+    }
+    .price-discount {
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--danger);
+      margin-left: .3rem;
+    }
+
+    .product-footer {
+      padding: .75rem 1.1rem 1.1rem;
+      display: flex;
+      gap: .5rem;
+    }
+    .btn-add-cart {
+      flex: 1;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: .82rem;
+      font-weight: 600;
+      padding: .5rem;
+      transition: background .2s, transform .15s;
+    }
+    .btn-add-cart:hover { background: var(--primary-dark); color: var(--white); transform: scale(1.02); }
+    .btn-view-detail {
+      background: transparent;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      font-size: .82rem;
+      font-weight: 600;
+      padding: .5rem .9rem;
+      transition: background .2s, color .2s;
+    }
+    .btn-view-detail:hover { background: var(--primary); color: var(--white); }
+
+    /* ============================================================
+       SECTION WRAPPERS
+    ============================================================ */
+    section { padding: 5rem 0; }
+    section.section-dark {
+      background: var(--dark-2);
+    }
+    .section-bg-light { background: var(--light); }
+
+    /* ============================================================
+       CART MODAL
+    ============================================================ */
+    .modal-content {
+      border: none;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+    }
+    .modal-header {
+      background: var(--dark);
+      color: var(--white);
+      border-radius: var(--radius) var(--radius) 0 0;
+      border: none;
+      padding: 1.25rem 1.5rem;
+    }
+    .modal-header .btn-close { filter: invert(1); }
+
+    .cart-item-row {
+      display: flex; align-items: center;
+      gap: 1rem;
+      padding: .9rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-item-img {
+      width: 64px; height: 64px;
+      background: var(--light);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .cart-item-img img { max-width: 56px; object-fit: contain; }
+    .qty-control {
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .qty-btn {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--light);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: .85rem; font-weight: 700;
+      transition: background .2s;
+    }
+    .qty-btn:hover { background: var(--primary); color: var(--white); }
+    .qty-val { font-weight: 600; min-width: 24px; text-align: center; }
+
+    .cart-summary-row {
+      display: flex; justify-content: space-between;
+      font-size: .9rem;
+      margin-bottom: .5rem;
+      color: var(--mid);
+    }
+    .cart-summary-row.total {
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--dark); margin-top: .75rem; padding-top: .75rem;
+      border-top: 2px solid var(--border);
+    }
+    .btn-checkout {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--white); border: none;
+      border-radius: 50px;
+      padding: .8rem 2rem; font-weight: 600; width: 100%;
+      font-size: 1rem; transition: opacity .2s, transform .15s;
+    }
+    .btn-checkout:hover { opacity: .9; transform: translateY(-1px); color: var(--white); }
+
+    /* ============================================================
+       CHECKOUT FORM
+    ============================================================ */
+    .checkout-wrap {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .form-label { font-size: .85rem; font-weight: 600; color: var(--mid); }
+    .form-control, .form-select {
+      border-color: var(--border);
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0,85,255,.1);
+    }
+
+    .payment-option {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .payment-option:hover, .payment-option.selected {
+      border-color: var(--primary);
+      background: #EEF2FF;
+    }
+    .payment-option .pay-icon {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-sm);
+      background: var(--light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: var(--primary);
+    }
+    .payment-option .pay-label { font-size: .88rem; font-weight: 600; }
+    .payment-option .pay-sub   { font-size: .75rem; color: var(--grey); }
+
+    .order-summary-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      position: sticky; top: 90px;
+    }
+    .order-item-line {
+      display: flex; justify-content: space-between;
+      font-size: .88rem; color: var(--mid); margin-bottom: .4rem;
+    }
+
+    /* ============================================================
+       ORDER TRACKING
+    ============================================================ */
+    .tracking-timeline {
+      position: relative;
+      padding-left: 2.5rem;
+    }
+    .tracking-timeline::before {
+      content: '';
+      position: absolute;
+      left: 12px; top: 12px; bottom: 12px;
+      width: 2px;
+      background: var(--border);
+    }
+    .tracking-step {
+      position: relative;
+      padding-bottom: 2rem;
+    }
+    .tracking-step:last-child { padding-bottom: 0; }
+    .tracking-dot {
+      position: absolute;
+      left: -2.5rem;
+      top: 2px;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      border: 3px solid var(--border);
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem;
+      transition: all .3s;
+    }
+    .tracking-step.done .tracking-dot {
+      background: var(--success); border-color: var(--success); color: var(--white);
+    }
+    .tracking-step.active .tracking-dot {
+      background: var(--primary); border-color: var(--primary); color: var(--white);
+      box-shadow: 0 0 0 4px rgba(0,85,255,.15);
+    }
+    .tracking-title { font-size: .92rem; font-weight: 600; color: var(--dark-2); }
+    .tracking-sub   { font-size: .78rem; color: var(--grey); margin-top: .15rem; }
+    .tracking-time  { font-size: .72rem; color: var(--primary); font-weight: 600; margin-top: .1rem; }
+
+    /* ============================================================
+       CUSTOMER PROFILE
+    ============================================================ */
+    .profile-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .profile-avatar {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-size: 2.2rem; font-weight: 700;
+      margin: 0 auto 1rem;
+    }
+    .stat-pill {
+      background: var(--light);
+      border-radius: 50px;
+      padding: .4rem .9rem;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--mid);
+      display: inline-flex; align-items: center; gap: .35rem;
+    }
+    .stat-pill i { color: var(--primary); }
+
+    .order-history-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .order-status-pill {
+      font-size: .72rem; font-weight: 700;
+      padding: .28rem .7rem; border-radius: 50px;
+      text-transform: uppercase; letter-spacing: .3px;
+    }
+    .status-delivered { background: #D1FAE5; color: #065F46; }
+    .status-shipping  { background: #DBEAFE; color: #1E40AF; }
+    .status-pending   { background: #FEF3C7; color: #92400E; }
+
+    /* ============================================================
+       ADMIN DASHBOARD
+    ============================================================ */
+    .admin-sidebar {
+      background: var(--dark);
+      border-radius: var(--radius);
+      padding: 1.5rem 0;
+      min-height: 600px;
+    }
+    .admin-sidebar .brand {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.2rem; font-weight: 700; color: var(--white);
+      padding: 0 1.5rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .admin-sidebar .brand span { color: var(--accent); }
+    .admin-nav-link {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .65rem 1.5rem;
+      font-size: .87rem; font-weight: 500;
+      color: rgba(255,255,255,.6);
+      text-decoration: none;
+      transition: color .2s, background .2s;
+      border-left: 3px solid transparent;
+    }
+    .admin-nav-link:hover, .admin-nav-link.active {
+      color: var(--white);
+      background: rgba(255,255,255,.06);
+      border-left-color: var(--accent);
+    }
+    .admin-nav-link i { font-size: 1rem; }
+
+    .kpi-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      box-shadow: var(--shadow);
+      position: relative; overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .kpi-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+    .kpi-card .kpi-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: .9rem;
+    }
+    .kpi-blue  .kpi-icon { background: #EEF2FF; color: var(--primary); }
+    .kpi-green .kpi-icon { background: #D1FAE5; color: var(--success); }
+    .kpi-amber .kpi-icon { background: #FEF3C7; color: var(--warning); }
+    .kpi-red   .kpi-icon { background: #FEE2E2; color: var(--danger); }
+
+    .kpi-val {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.9rem; font-weight: 700; color: var(--dark);
+    }
+    .kpi-lbl { font-size: .8rem; color: var(--grey); margin-top: .15rem; }
+    .kpi-delta {
+      font-size: .75rem; font-weight: 700;
+      padding: .18rem .55rem; border-radius: 50px;
+      position: absolute; top: 1.2rem; right: 1.2rem;
+    }
+    .kpi-up   { background: #D1FAE5; color: #065F46; }
+    .kpi-down { background: #FEE2E2; color: #991B1B; }
+
+    .admin-table th {
+      background: var(--dark); color: rgba(255,255,255,.75);
+      font-size: .78rem; font-weight: 600; letter-spacing: .5px;
+      text-transform: uppercase; border: none;
+    }
+    .admin-table td {
+      font-size: .85rem; color: var(--mid);
+      vertical-align: middle; border-color: var(--border);
+    }
+    .admin-table tr:hover td { background: #F8F9FF; }
+
+    .mini-chart-bar {
+      display: flex; align-items: flex-end; gap: 4px; height: 60px;
+    }
+    .bar-col {
+      flex: 1; background: linear-gradient(180deg, var(--primary), var(--accent));
+      border-radius: 3px 3px 0 0;
+      min-width: 6px;
+      transition: opacity .2s;
+    }
+    .bar-col:hover { opacity: .8; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .footer-brand {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.5rem; font-weight: 700; color: var(--white);
+    }
+    .footer-brand span { color: var(--accent); }
+    .footer-desc { font-size: .85rem; color: rgba(255,255,255,.45); line-height: 1.7; }
+    .footer-heading { font-size: .75rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 1rem; }
+    .footer-link {
+      display: block; font-size: .85rem;
+      color: rgba(255,255,255,.55); text-decoration: none;
+      margin-bottom: .55rem; transition: color .2s;
+    }
+    .footer-link:hover { color: var(--accent); }
+    .social-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.6); text-decoration: none;
+      transition: background .2s, color .2s; font-size: .9rem;
+    }
+    .social-btn:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 1.5rem 0;
+      font-size: .78rem; color: rgba(255,255,255,.3);
+    }
+
+    /* ============================================================
+       UTILITIES & RESPONSIVE
+    ============================================================ */
+    .divider-line {
+      height: 1px; background: var(--border); margin: 2rem 0;
+    }
+    .tag-chip {
+      display: inline-block;
+      background: var(--light); border-radius: 50px;
+      padding: .25rem .75rem; font-size: .75rem; font-weight: 600;
+      color: var(--mid); margin: .2rem;
+    }
+    .toast-stack { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999; }
+
+    /* Section tabs */
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+
+    /* Promo banner cards */
+    .promo-card {
+      border-radius: var(--radius); overflow: hidden;
+      position: relative; min-height: 200px;
+      display: flex; align-items: center; padding: 2rem;
+    }
+    .promo-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,.55) 0%, transparent 70%);
+      z-index: 1;
+    }
+    .promo-card-content { position: relative; z-index: 2; }
+    .promo-card-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+    }
+
+    /* Wishlist heart toggle */
+    .wish-on { color: var(--danger) !important; }
+
+    @media (max-width: 768px) {
+      .hero-headline { font-size: 2.2rem; }
+      .hero-product-img { display: none; }
+      section { padding: 3.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOAST NOTIFICATION
+============================================================ -->
+<div class="toast-stack" id="toastStack">
+  <div id="cartToast" class="toast align-items-center text-white bg-primary border-0" role="alert" data-bs-delay="2500">
+    <div class="d-flex">
+      <div class="toast-body fw-semibold"><i class="bi bi-cart-check me-2"></i>เพิ่มสินค้าในตะกร้าแล้ว</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     STICKY NAVBAR
+============================================================ -->
+<nav class="navbar navbar-expand-lg sticky-top" id="mainNav">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand" href="#" onclick="showPage('home')">Tech<span>Shop</span></a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navCollapse">
+      <i class="bi bi-list text-white fs-4"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navCollapse">
+      <ul class="navbar-nav me-auto ms-3 gap-1">
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="showPage('home')"><i class="bi bi-house-door me-1"></i>Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('products')"><i class="bi bi-grid me-1"></i>Products</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('home')"><i class="bi bi-tag me-1"></i>Categories</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('tracking')"><i class="bi bi-box-seam me-1"></i>Track Order</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('admin')"><i class="bi bi-speedometer2 me-1"></i>Admin</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+        <!-- Search mini -->
+        <div class="input-group" style="width:200px;">
+          <input type="text" class="form-control form-control-sm" placeholder="ค้นหาสินค้า..." style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12);color:#fff;font-size:.82rem;" />
+          <button class="btn btn-sm" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.12);color:#fff;"><i class="bi bi-search"></i></button>
+        </div>
+        <!-- Cart -->
+        <a class="nav-link cart-badge" href="#" onclick="openCart()">
+          <i class="bi bi-cart3 text-white fs-5"></i>
+          <span class="badge-count" id="cartCount">3</span>
+        </a>
+        <!-- Profile -->
+        <a class="nav-link" href="#" onclick="showPage('profile')">
+          <i class="bi bi-person-circle text-white fs-5"></i>
+        </a>
+        <!-- Login -->
+        <a class="nav-link btn-nav-login" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     PAGE: HOME
+============================================================ -->
+<div id="page-home" class="page-section active">
+
+  <!-- HERO BANNER -->
+  <section id="hero" class="py-0">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="container position-relative" style="z-index:2;">
+      <div class="row align-items-center min-vh-100 py-5">
+        <div class="col-lg-6">
+          <div class="hero-eyebrow"><i class="bi bi-lightning-charge-fill me-1"></i>Flash Sale — ลดสูงสุด 50%</div>
+          <h1 class="hero-headline">
+            Gear Up.<br>
+            <span class="accent">Play Hard.</span><br>
+            Win More.
+          </h1>
+          <p class="hero-sub">อุปกรณ์คอมพิวเตอร์และเกมมิ่งเกียร์ระดับ Pro คัดสรรจากแบรนด์ชั้นนำกว่า 50 แบรนด์ มาพร้อมการรับประกันและบริการหลังการขายที่เชื่อถือได้</p>
+          <div class="d-flex gap-3 flex-wrap mb-4">
+            <button class="btn btn-hero-primary" onclick="showPage('products')"><i class="bi bi-arrow-right-circle me-2"></i>Shop Now</button>
+            <button class="btn btn-hero-secondary" onclick="showPage('products')"><i class="bi bi-play-circle me-2"></i>ดูโปรโมชั่น</button>
+          </div>
+          <!-- Stats -->
+          <div class="d-flex gap-4 flex-wrap mt-2">
+            <div class="hero-stat">
+              <div class="num">15K+</div>
+              <div class="lbl">สินค้าในระบบ</div>
+            </div>
+            <div class="hero-stat">
+              <div class="num">50+</div>
+              <div class="lbl">แบรนด์ชั้นนำ</div>
+            </div>
+            <div class="hero-stat">
+              <div class="num">4.9★</div>
+              <div class="lbl">คะแนนรีวิว</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 text-center d-none d-lg-block">
+          <img src="https://placehold.co/520x400/0A0E1A/3377FF?text=Gaming+Setup" alt="Hero Product" class="hero-product-img" />
+        </div>
+      </div>
+    </div>
+    <!-- Scroll indicator -->
+    <div class="text-center pb-3 position-relative" style="z-index:2;">
+      <i class="bi bi-chevron-double-down text-white opacity-50" style="animation:float 2s ease-in-out infinite;display:inline-block;"></i>
+    </div>
+  </section>
+
+  <!-- PROMO BAR -->
+  <div class="promo-bar">
+    <div class="promo-bar-inner">
+      <span>🔥 Flash Sale ลดสูงสุด 50% &nbsp;|&nbsp; 🚚 ส่งฟรีเมื่อซื้อครบ 999 บาท &nbsp;|&nbsp; 💳 ผ่อน 0% 10 เดือน &nbsp;|&nbsp; 🎮 สินค้าใหม่ RTX 5090 มาแล้ว &nbsp;|&nbsp; ⚡ Ryzen 9000 Series ราคาพิเศษ &nbsp;|&nbsp;</span>
+      <span>🔥 Flash Sale ลดสูงสุด 50% &nbsp;|&nbsp; 🚚 ส่งฟรีเมื่อซื้อครบ 999 บาท &nbsp;|&nbsp; 💳 ผ่อน 0% 10 เดือน &nbsp;|&nbsp; 🎮 สินค้าใหม่ RTX 5090 มาแล้ว &nbsp;|&nbsp; ⚡ Ryzen 9000 Series ราคาพิเศษ &nbsp;|&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="section-bg-light">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+          <div class="section-title">หมวดหมู่สินค้า</div>
+          <p class="text-muted mt-2 mb-0" style="font-size:.9rem;">เลือกหมวดหมู่ที่คุณสนใจ</p>
+        </div>
+        <a href="#" class="text-primary text-decoration-none fw-600" style="font-size:.88rem;" onclick="showPage('products')">ดูทั้งหมด <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="row g-3">
+        <!-- Category Cards -->
+        <div class="col-6 col-sm-4 col-md-3 col-xl-3" onclick="showPage('products')">
+          <div class="cat-card h-100"><div class="cat-icon"><i class="bi bi-cpu-fill"></i></div><div class="cat-name">CPU / Processor</div><div class="cat-count">234 รายการ</div></div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-xl-3" onclick="showPage('products')">
+          <div class="cat-card h-100"><div class="cat-icon"><i class="bi bi-gpu-card"></i></div><div class="cat-name">GPU / Graphics Card</div><div class="cat-count">189 รายการ</div></div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-xl-3" onclick="showPage('products')">
+          <div class="cat-card h-100"><div class="cat-icon"><i class="bi bi-memory"></i></div><div class="cat-name">RAM / Memory</div><div class="cat-count">312 รายการ</div></div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-xl-3" onclick="showPage('products')">
+          <div class="cat-card h-100"><div class="cat-icon"><i class="bi bi-device-hdd-fill"></i></div><div class="cat-name">SSD / Storage</div><div class="cat-count">278 รายการ</div></div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-xl-3" onclick="showPage('products')">
+          <div class="cat-card h-100"><div class="cat-icon"><i class="bi bi-display-fill"></i></div><div class="cat-name">Monitor</div><div class="cat-count">156 รายการ</div></div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-xl-3" onclick="showPage('products')">
+          <div class="cat-card h-100"><div class="cat-icon"><i class="bi bi-keyboard-fill"></i></div><div class="cat-name">Keyboard</div><div class="cat-count">198 รายการ</div></div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-xl-3" onclick="showPage('products')">
+          <div class="cat-card h-100"><div class="cat-icon"><i class="bi bi-mouse-fill"></i></div><div class="cat-name">Mouse</div><div class="cat-count">245 รายการ</div></div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-xl-3" onclick="showPage('products')">
+          <div class="cat-card h-100"><div class="cat-icon"><i class="bi bi-headphones"></i></div><div class="cat-name">Headset</div><div class="cat-count">167 รายการ</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS (on homepage) -->
+  <section>
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+          <div class="section-title">สินค้าแนะนำ</div>
+          <p class="text-muted mt-2 mb-0" style="font-size:.9rem;">ขายดีที่สุดประจำเดือน</p>
+        </div>
+        <a href="#" class="text-primary text-decoration-none" style="font-size:.88rem;font-weight:600;" onclick="showPage('products')">ดูสินค้าทั้งหมด <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="row g-4" id="homeProductGrid">
+        <!-- filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMO BANNERS -->
+  <section class="section-bg-light">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="promo-card" style="background: linear-gradient(135deg,#0033AA,#0055FF);">
+            <div class="promo-card-content">
+              <div class="badge bg-warning text-dark mb-2" style="font-size:.72rem;font-weight:700;">HOT DEAL</div>
+              <h4 class="text-white fw-700 mb-1">RTX 5090 Series</h4>
+              <p class="text-white opacity-75 mb-3" style="font-size:.88rem;">Graphics Card รุ่นใหม่ล่าสุด ประสิทธิภาพสูงสุด</p>
+              <button class="btn btn-light btn-sm fw-600" onclick="showPage('products')">ดูสินค้า <i class="bi bi-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="promo-card" style="background: linear-gradient(135deg,#064E3B,#059669);">
+            <div class="promo-card-content">
+              <div class="badge bg-white text-success mb-2" style="font-size:.72rem;font-weight:700;">CLEARANCE</div>
+              <h4 class="text-white fw-700 mb-1">Gaming Peripherals</h4>
+              <p class="text-white opacity-75 mb-3" style="font-size:.88rem;">คีย์บอร์ด เมาส์ และหูฟัง ลดราคาพิเศษ</p>
+              <button class="btn btn-light btn-sm fw-600" onclick="showPage('products')">ดูโปรโมชั่น <i class="bi bi-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-home -->
+
+<!-- ============================================================
+     PAGE: PRODUCTS
+============================================================ -->
+<div id="page-products" class="page-section" style="padding-top:80px;">
+  <div class="container py-5">
+    <div class="section-title mb-4">สินค้าทั้งหมด</div>
+
+    <!-- SEARCH & FILTER BAR -->
+    <div class="filter-bar mb-5">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-text" style="background:var(--light);border-color:var(--border);"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" class="form-control" placeholder="ค้นหาสินค้า เช่น RTX, Ryzen, Corsair..." id="searchInput" onkeyup="filterProducts()" />
+          </div>
+        </div>
+        <div class="col-md-2">
+          <select class="form-select" id="catFilter" onchange="filterProducts()">
+            <option value="">หมวดหมู่ทั้งหมด</option>
+            <option>CPU</option><option>GPU</option><option>RAM</option><option>SSD</option>
+            <option>Monitor</option><option>Keyboard</option><option>Mouse</option><option>Headset</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select class="form-select" id="priceFilter" onchange="filterProducts()">
+            <option value="">ช่วงราคา</option>
+            <option value="0-2000">ต่ำกว่า 2,000 บาท</option>
+            <option value="2000-5000">2,000 – 5,000 บาท</option>
+            <option value="5000-15000">5,000 – 15,000 บาท</option>
+            <option value="15000-99999">มากกว่า 15,000 บาท</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select class="form-select" id="sortFilter" onchange="filterProducts()">
+            <option>เรียงตาม: แนะนำ</option>
+            <option>ราคาน้อย → มาก</option>
+            <option>ราคามาก → น้อย</option>
+            <option>ใหม่ล่าสุด</option>
+            <option>ขายดีที่สุด</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn-search w-100" onclick="filterProducts()"><i class="bi bi-funnel me-1"></i>กรองสินค้า</button>
+        </div>
+      </div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <span style="font-size:.8rem;color:var(--grey);">แท็กยอดนิยม:</span>
+        <span class="tag-chip" onclick="document.getElementById('searchInput').value='RTX';filterProducts()">RTX 5090</span>
+        <span class="tag-chip" onclick="document.getElementById('searchInput').value='Ryzen';filterProducts()">Ryzen 9</span>
+        <span class="tag-chip" onclick="document.getElementById('catFilter').value='Keyboard';filterProducts()">Mechanical Keyboard</span>
+        <span class="tag-chip" onclick="document.getElementById('catFilter').value='Mouse';filterProducts()">Gaming Mouse</span>
+        <span class="tag-chip">144Hz Monitor</span>
+        <span class="tag-chip">DDR5 RAM</span>
+      </div>
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="row g-4" id="productGrid">
+      <!-- filled by JS -->
+    </div>
+    <div id="noResult" class="text-center py-5 d-none">
+      <i class="bi bi-search display-4 text-muted"></i>
+      <p class="mt-3 text-muted">ไม่พบสินค้าที่ค้นหา</p>
+    </div>
+
+    <!-- PAGINATION -->
+    <nav class="mt-5">
+      <ul class="pagination justify-content-center">
+        <li class="page-item disabled"><a class="page-link" href="#">‹</a></li>
+        <li class="page-item active"><a class="page-link" href="#" style="background:var(--primary);border-color:var(--primary);">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">›</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<!-- ============================================================
+     PAGE: ORDER TRACKING
+============================================================ -->
+<div id="page-tracking" class="page-section" style="padding-top:80px;">
+  <div class="container py-5">
+    <div class="section-title mb-2">ติดตามคำสั่งซื้อ</div>
+    <p class="text-muted mb-5" style="font-size:.9rem;">ตรวจสอบสถานะการจัดส่งสินค้าของคุณ</p>
+
+    <!-- Search Order -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-6">
+        <div class="filter-bar">
+          <label class="form-label">หมายเลขคำสั่งซื้อ</label>
+          <div class="input-group">
+            <input type="text" class="form-control" value="TZ-2024-00842" placeholder="เช่น TZ-2024-00842" />
+            <button class="btn-search px-4">ค้นหา</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="checkout-wrap">
+          <!-- Order info -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <div style="font-size:.8rem;color:var(--grey);">หมายเลขคำสั่งซื้อ</div>
+              <div style="font-weight:700;color:var(--dark);font-size:1.05rem;">TZ-2024-00842</div>
+            </div>
+            <span class="order-status-pill status-shipping"><i class="bi bi-truck me-1"></i>กำลังจัดส่ง</span>
+          </div>
+
+          <!-- Tracking Timeline -->
+          <div class="tracking-timeline">
+            <div class="tracking-step done">
+              <div class="tracking-dot"><i class="bi bi-check"></i></div>
+              <div class="tracking-title">รับคำสั่งซื้อ</div>
+              <div class="tracking-sub">ระบบรับคำสั่งซื้อของคุณเรียบร้อยแล้ว</div>
+              <div class="tracking-time">29 มิ.ย. 2024 · 10:32 น.</div>
+            </div>
+            <div class="tracking-step done">
+              <div class="tracking-dot"><i class="bi bi-check"></i></div>
+              <div class="tracking-title">ชำระเงินสำเร็จ</div>
+              <div class="tracking-sub">ยืนยันการชำระเงินผ่าน PromptPay</div>
+              <div class="tracking-time">29 มิ.ย. 2024 · 10:45 น.</div>
+            </div>
+            <div class="tracking-step done">
+              <div class="tracking-dot"><i class="bi bi-check"></i></div>
+              <div class="tracking-title">กำลังจัดเตรียมสินค้า</div>
+              <div class="tracking-sub">ทีมงานกำลังแพ็คสินค้าของคุณ</div>
+              <div class="tracking-time">29 มิ.ย. 2024 · 14:00 น.</div>
+            </div>
+            <div class="tracking-step active">
+              <div class="tracking-dot"><i class="bi bi-truck"></i></div>
+              <div class="tracking-title">กำลังจัดส่ง</div>
+              <div class="tracking-sub">สินค้าอยู่ระหว่างการจัดส่ง — Kerry Express · TH2024062900842</div>
+              <div class="tracking-time">30 มิ.ย. 2024 · 08:15 น.</div>
+            </div>
+            <div class="tracking-step">
+              <div class="tracking-dot"><i class="bi bi-house-check"></i></div>
+              <div class="tracking-title">จัดส่งสำเร็จ</div>
+              <div class="tracking-sub">คาดว่าจะถึงมือคุณ</div>
+              <div class="tracking-time">ประมาณ 1 ก.ค. 2024</div>
+            </div>
+          </div>
+
+          <!-- Order Items -->
+          <div class="divider-line"></div>
+          <div class="fw-600 mb-3" style="font-size:.9rem;">รายการสินค้า</div>
+          <div class="cart-item-row">
+            <div class="cart-item-img"><img src="https://placehold.co/56x56/EEF2FF/0055FF?text=GPU" alt=""/></div>
+            <div class="flex-grow-1">
+              <div style="font-size:.88rem;font-weight:600;">ASUS ROG Strix RTX 4080 Super 16GB</div>
+              <div style="font-size:.78rem;color:var(--grey);">จำนวน 1 ชิ้น</div>
+            </div>
+            <div style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--primary);">฿28,500</div>
+          </div>
+          <div class="cart-item-row">
+            <div class="cart-item-img"><img src="https://placehold.co/56x56/EEF2FF/0055FF?text=RAM" alt=""/></div>
+            <div class="flex-grow-1">
+              <div style="font-size:.88rem;font-weight:600;">Corsair Vengeance DDR5 32GB 6000MHz</div>
+              <div style="font-size:.78rem;color:var(--grey);">จำนวน 1 ชิ้น</div>
+            </div>
+            <div style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--primary);">฿4,290</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     PAGE: PROFILE
+============================================================ -->
+<div id="page-profile" class="page-section" style="padding-top:80px;">
+  <div class="container py-5">
+    <div class="section-title mb-5">บัญชีของฉัน</div>
+    <div class="row g-4">
+      <!-- Profile card -->
+      <div class="col-lg-3">
+        <div class="profile-card text-center">
+          <div class="profile-avatar">S</div>
+          <div style="font-weight:700;font-size:1.1rem;color:var(--dark);">หมูเติ้ล ฝันร้ายตี๋น้อย</div>
+          <div style="font-size:.82rem;color:var(--grey);margin-top:.3rem;">Mootle@TechShop.th</div>
+          <div style="font-size:.78rem;color:var(--grey);margin-top:.15rem;"><i class="bi bi-telephone me-1"></i>081-234-5678</div>
+          <div class="divider-line"></div>
+          <div class="d-flex justify-content-center gap-2 flex-wrap">
+            <span class="stat-pill"><i class="bi bi-bag-check"></i> 24 คำสั่งซื้อ</span>
+            <span class="stat-pill"><i class="bi bi-heart"></i> 12 Wishlist</span>
+          </div>
+          <div class="divider-line"></div>
+          <!-- Sidebar nav -->
+          <div class="text-start">
+            <a href="#" class="admin-nav-link active ps-0" style="color:var(--dark-2);border-color:var(--primary);"><i class="bi bi-person me-2"></i>ข้อมูลส่วนตัว</a>
+            <a href="#" class="admin-nav-link ps-0" style="color:var(--grey);"><i class="bi bi-bag me-2"></i>ประวัติการสั่งซื้อ</a>
+            <a href="#" class="admin-nav-link ps-0" style="color:var(--grey);" onclick="showPage('tracking')"><i class="bi bi-box-seam me-2"></i>ติดตามพัสดุ</a>
+            <a href="#" class="admin-nav-link ps-0" style="color:var(--grey);"><i class="bi bi-heart me-2"></i>รายการโปรด</a>
+            <a href="#" class="admin-nav-link ps-0" style="color:var(--grey);"><i class="bi bi-shield-check me-2"></i>ความปลอดภัย</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="col-lg-9">
+        <!-- Order History -->
+        <div class="profile-card mb-4">
+          <div class="fw-700 mb-3" style="font-size:1rem;color:var(--dark);">ประวัติการสั่งซื้อล่าสุด</div>
+          <div class="order-history-row">
+            <div>
+              <div style="font-size:.88rem;font-weight:600;">#TZ-2024-00842</div>
+              <div style="font-size:.78rem;color:var(--grey);">29 มิ.ย. 2024 · 2 รายการ</div>
+            </div>
+            <div class="text-center d-none d-sm-block">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--primary);">฿32,790</div>
+            </div>
+            <span class="order-status-pill status-shipping">กำลังจัดส่ง</span>
+            <button class="btn btn-sm btn-outline-primary" onclick="showPage('tracking')">ติดตาม</button>
+          </div>
+          <div class="order-history-row">
+            <div>
+              <div style="font-size:.88rem;font-weight:600;">#TZ-2024-00711</div>
+              <div style="font-size:.78rem;color:var(--grey);">15 มิ.ย. 2024 · 1 รายการ</div>
+            </div>
+            <div class="text-center d-none d-sm-block">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--primary);">฿4,290</div>
+            </div>
+            <span class="order-status-pill status-delivered">จัดส่งแล้ว</span>
+            <button class="btn btn-sm btn-outline-secondary">รีวิว</button>
+          </div>
+          <div class="order-history-row">
+            <div>
+              <div style="font-size:.88rem;font-weight:600;">#TZ-2024-00589</div>
+              <div style="font-size:.78rem;color:var(--grey);">2 มิ.ย. 2024 · 3 รายการ</div>
+            </div>
+            <div class="text-center d-none d-sm-block">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--primary);">฿9,850</div>
+            </div>
+            <span class="order-status-pill status-delivered">จัดส่งแล้ว</span>
+            <button class="btn btn-sm btn-outline-secondary">รีวิว</button>
+          </div>
+        </div>
+
+        <!-- Wishlist -->
+        <div class="profile-card">
+          <div class="fw-700 mb-3" style="font-size:1rem;color:var(--dark);">รายการโปรด (Wishlist)</div>
+          <div class="row g-3" id="wishlistGrid">
+            <!-- filled by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     PAGE: ADMIN DASHBOARD
+============================================================ -->
+<div id="page-admin" class="page-section" style="padding-top:80px;">
+  <div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+      <div>
+        <div class="section-title mb-1">Admin Dashboard</div>
+        <p class="text-muted mb-0" style="font-size:.88rem;">ภาพรวมธุรกิจ — อัปเดตล่าสุด: 29 มิ.ย. 2024</p>
+      </div>
+      <div class="d-flex gap-2">
+        <select class="form-select form-select-sm" style="width:auto;font-size:.82rem;">
+          <option>เดือนนี้</option><option>เดือนที่แล้ว</option><option>3 เดือน</option>
+        </select>
+        <button class="btn btn-sm btn-primary fw-600"><i class="bi bi-download me-1"></i>Export</button>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Sidebar -->
+      <div class="col-lg-2 d-none d-lg-block">
+        <div class="admin-sidebar">
+          <div class="brand">Tech<span>Zone</span> <span class="badge bg-danger ms-auto" style="font-size:.6rem;">Admin</span></div>
+          <div style="padding:1rem 0 .5rem;">
+            <a href="#" class="admin-nav-link active"><i class="bi bi-speedometer2"></i> Dashboard</a>
+            <a href="#" class="admin-nav-link"><i class="bi bi-bag"></i> Orders</a>
+            <a href="#" class="admin-nav-link"><i class="bi bi-grid"></i> Products</a>
+            <a href="#" class="admin-nav-link"><i class="bi bi-people"></i> Customers</a>
+            <a href="#" class="admin-nav-link"><i class="bi bi-bar-chart"></i> Analytics</a>
+            <a href="#" class="admin-nav-link"><i class="bi bi-megaphone"></i> Marketing</a>
+            <a href="#" class="admin-nav-link"><i class="bi bi-gear"></i> Settings</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main area -->
+      <div class="col-lg-10">
+        <!-- KPI Cards -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="kpi-card kpi-blue">
+              <span class="kpi-delta kpi-up">+12.5%</span>
+              <div class="kpi-icon"><i class="bi bi-currency-dollar"></i></div>
+              <div class="kpi-val">฿2.4M</div>
+              <div class="kpi-lbl">ยอดขายเดือนนี้</div>
+              <div class="mini-chart-bar mt-3">
+                <div class="bar-col" style="height:40%"></div><div class="bar-col" style="height:60%"></div><div class="bar-col" style="height:50%"></div><div class="bar-col" style="height:80%"></div><div class="bar-col" style="height:70%"></div><div class="bar-col" style="height:90%"></div><div class="bar-col" style="height:100%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="kpi-card kpi-green">
+              <span class="kpi-delta kpi-up">+8.3%</span>
+              <div class="kpi-icon"><i class="bi bi-bag-check"></i></div>
+              <div class="kpi-val">1,284</div>
+              <div class="kpi-lbl">คำสั่งซื้อทั้งหมด</div>
+              <div class="mini-chart-bar mt-3">
+                <div class="bar-col" style="height:50%;background:linear-gradient(180deg,#10B981,#6EE7B7)"></div>
+                <div class="bar-col" style="height:70%;background:linear-gradient(180deg,#10B981,#6EE7B7)"></div>
+                <div class="bar-col" style="height:55%;background:linear-gradient(180deg,#10B981,#6EE7B7)"></div>
+                <div class="bar-col" style="height:85%;background:linear-gradient(180deg,#10B981,#6EE7B7)"></div>
+                <div class="bar-col" style="height:75%;background:linear-gradient(180deg,#10B981,#6EE7B7)"></div>
+                <div class="bar-col" style="height:95%;background:linear-gradient(180deg,#10B981,#6EE7B7)"></div>
+                <div class="bar-col" style="height:100%;background:linear-gradient(180deg,#10B981,#6EE7B7)"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="kpi-card kpi-amber">
+              <span class="kpi-delta kpi-up">+5.1%</span>
+              <div class="kpi-icon"><i class="bi bi-box-seam"></i></div>
+              <div class="kpi-val">15,247</div>
+              <div class="kpi-lbl">สินค้าทั้งหมด</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="kpi-card kpi-red">
+              <span class="kpi-delta kpi-up">+18.9%</span>
+              <div class="kpi-icon"><i class="bi bi-people"></i></div>
+              <div class="kpi-val">8,934</div>
+              <div class="kpi-lbl">ลูกค้าทั้งหมด</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Orders + Low Stock -->
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="checkout-wrap p-0">
+              <div class="d-flex justify-content-between align-items-center p-3 pb-0">
+                <div class="fw-700" style="font-size:.95rem;">คำสั่งซื้อล่าสุด</div>
+                <a href="#" class="text-primary text-decoration-none" style="font-size:.8rem;">ดูทั้งหมด</a>
+              </div>
+              <div class="table-responsive">
+                <table class="table admin-table mb-0 mt-2">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>ลูกค้า</th>
+                      <th>สินค้า</th>
+                      <th>ยอด</th>
+                      <th>สถานะ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>#00842</td><td>สมชาย เท.</td><td>RTX 4080, RAM</td><td class="fw-600 text-primary">฿32,790</td><td><span class="order-status-pill status-shipping">จัดส่ง</span></td></tr>
+                    <tr><td>#00841</td><td>กานดา ว.</td><td>Keyboard Mech.</td><td class="fw-600 text-primary">฿3,290</td><td><span class="order-status-pill status-delivered">สำเร็จ</span></td></tr>
+                    <tr><td>#00840</td><td>วิชัย ป.</td><td>Monitor 27"</td><td class="fw-600 text-primary">฿9,500</td><td><span class="order-status-pill status-pending">รอดำเนินการ</span></td></tr>
+                    <tr><td>#00839</td><td>มาลี ร.</td><td>Gaming Mouse</td><td class="fw-600 text-primary">฿1,490</td><td><span class="order-status-pill status-delivered">สำเร็จ</span></td></tr>
+                    <tr><td>#00838</td><td>ประสิทธิ์ ก.</td><td>RTX 5090, CPU</td><td class="fw-600 text-primary">฿85,000</td><td><span class="order-status-pill status-shipping">จัดส่ง</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="checkout-wrap">
+              <div class="fw-700 mb-3" style="font-size:.95rem;color:var(--dark);">สินค้าใกล้หมดสต็อก</div>
+              <div class="d-flex flex-column gap-3">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div style="font-size:.82rem;font-weight:600;">RTX 5090 24GB</div>
+                    <div style="font-size:.72rem;color:var(--grey);">GPU</div>
+                  </div>
+                  <span class="badge bg-danger">เหลือ 2</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div style="font-size:.82rem;font-weight:600;">Ryzen 9 9950X</div>
+                    <div style="font-size:.72rem;color:var(--grey);">CPU</div>
+                  </div>
+                  <span class="badge bg-warning text-dark">เหลือ 5</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div style="font-size:.82rem;font-weight:600;">Corsair K100 Air</div>
+                    <div style="font-size:.72rem;color:var(--grey);">Keyboard</div>
+                  </div>
+                  <span class="badge bg-warning text-dark">เหลือ 7</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div style="font-size:.82rem;font-weight:600;">ASUS ROG Swift OLED</div>
+                    <div style="font-size:.72rem;color:var(--grey);">Monitor</div>
+                  </div>
+                  <span class="badge bg-danger">เหลือ 3</span>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-outline-primary w-100 mt-3 fw-600">สั่งซื้อเพิ่มสต็อก</button>
+            </div>
+
+            <!-- Revenue split -->
+            <div class="checkout-wrap mt-4">
+              <div class="fw-700 mb-3" style="font-size:.95rem;">รายได้แยกหมวดหมู่</div>
+              <div class="d-flex flex-column gap-2">
+                <div>
+                  <div class="d-flex justify-content-between mb-1"><span style="font-size:.8rem;">GPU</span><span style="font-size:.8rem;font-weight:700;">42%</span></div>
+                  <div class="progress" style="height:6px;border-radius:3px;"><div class="progress-bar" style="width:42%;background:var(--primary);"></div></div>
+                </div>
+                <div>
+                  <div class="d-flex justify-content-between mb-1"><span style="font-size:.8rem;">CPU</span><span style="font-size:.8rem;font-weight:700;">24%</span></div>
+                  <div class="progress" style="height:6px;border-radius:3px;"><div class="progress-bar" style="width:24%;background:var(--accent);"></div></div>
+                </div>
+                <div>
+                  <div class="d-flex justify-content-between mb-1"><span style="font-size:.8rem;">Peripherals</span><span style="font-size:.8rem;font-weight:700;">18%</span></div>
+                  <div class="progress" style="height:6px;border-radius:3px;"><div class="progress-bar" style="width:18%;background:var(--success);"></div></div>
+                </div>
+                <div>
+                  <div class="d-flex justify-content-between mb-1"><span style="font-size:.8rem;">Monitor</span><span style="font-size:.8rem;font-weight:700;">16%</span></div>
+                  <div class="progress" style="height:6px;border-radius:3px;"><div class="progress-bar" style="width:16%;background:var(--warning);"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer id="footer">
+  <div class="container py-5">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="footer-brand mb-3">Tech<span>Zone</span></div>
+        <p class="footer-desc">ผู้นำด้านอุปกรณ์คอมพิวเตอร์และเกมมิ่งเกียร์ คัดสรรสินค้าคุณภาพสูงจากแบรนด์ชั้นนำทั่วโลก พร้อมการรับประกันและบริการหลังการขายที่เชื่อถือได้</p>
+        <div class="d-flex gap-2 mt-3">
+          <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="social-btn"><i class="bi bi-youtube"></i></a>
+          <a href="#" class="social-btn"><i class="bi bi-discord"></i></a>
+          <a href="#" class="social-btn"><i class="bi bi-line"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-heading">สินค้า</div>
+        <a href="#" class="footer-link">CPU / Processor</a>
+        <a href="#" class="footer-link">GPU / Graphics</a>
+        <a href="#" class="footer-link">RAM / Memory</a>
+        <a href="#" class="footer-link">SSD / Storage</a>
+        <a href="#" class="footer-link">Monitor</a>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-heading">อุปกรณ์เสริม</div>
+        <a href="#" class="footer-link">Keyboard</a>
+        <a href="#" class="footer-link">Mouse</a>
+        <a href="#" class="footer-link">Headset</a>
+        <a href="#" class="footer-link">Mousepad</a>
+        <a href="#" class="footer-link">Chair</a>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-heading">บริการ</div>
+        <a href="#" class="footer-link">ติดตามพัสดุ</a>
+        <a href="#" class="footer-link">นโยบายคืนสินค้า</a>
+        <a href="#" class="footer-link">การรับประกัน</a>
+        <a href="#" class="footer-link">ผ่อนชำระ</a>
+        <a href="#" class="footer-link">ติดต่อเรา</a>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-heading">เกี่ยวกับเรา</div>
+        <a href="#" class="footer-link">เกี่ยวกับ TechShop</a>
+        <a href="#" class="footer-link">ร่วมงานกับเรา</a>
+        <a href="#" class="footer-link">นโยบายความเป็นส่วนตัว</a>
+        <a href="#" class="footer-link">เงื่อนไขการใช้งาน</a>
+      </div>
+    </div>
+    <!-- Payment icons -->
+    <div class="mt-4 pt-4" style="border-top:1px solid rgba(255,255,255,.06);">
+      <div class="d-flex align-items-center gap-3 flex-wrap">
+        <span class="footer-desc" style="font-size:.78rem;">ช่องทางชำระเงิน:</span>
+        <span class="badge bg-secondary opacity-75">VISA</span>
+        <span class="badge bg-secondary opacity-75">Mastercard</span>
+        <span class="badge bg-secondary opacity-75">PromptPay</span>
+        <span class="badge bg-secondary opacity-75">SCB</span>
+        <span class="badge bg-secondary opacity-75">KBANK</span>
+        <span class="badge bg-secondary opacity-75">TrueMoney</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+      <span>© 2024 TechShop Co., Ltd. สงวนลิขสิทธิ์ทุกประการ</span>
+      <span>🇹🇭 ให้บริการทั่วประเทศไทย</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     CART MODAL
+============================================================ -->
+<div class="modal fade" id="cartModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-700"><i class="bi bi-cart3 me-2"></i>ตะกร้าสินค้า</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div id="cartItemsContainer">
+          <!-- Cart items rendered by JS -->
+        </div>
+        <div class="divider-line"></div>
+        <!-- Summary -->
+        <div class="cart-summary-row"><span>ราคาสินค้า</span><span id="cartSubtotal">฿0</span></div>
+        <div class="cart-summary-row"><span>ค่าจัดส่ง</span><span class="text-success fw-600">ฟรี</span></div>
+        <div class="cart-summary-row"><span>ส่วนลด</span><span class="text-danger">-฿500</span></div>
+        <div class="cart-summary-row total"><span>ยอดรวม</span><span id="cartTotal" class="text-primary">฿0</span></div>
+        <!-- Coupon -->
+        <div class="input-group mt-3">
+          <input type="text" class="form-control" placeholder="โค้ดส่วนลด (TECH50)" style="font-size:.85rem;" />
+          <button class="btn btn-outline-primary" style="font-size:.85rem;font-weight:600;">ใช้โค้ด</button>
+        </div>
+      </div>
+      <div class="modal-footer border-0 px-4 pb-4">
+        <button class="btn btn-outline-secondary w-100 mb-2" data-bs-dismiss="modal" onclick="showPage('products')">ซื้อสินค้าต่อ</button>
+        <button class="btn-checkout" data-bs-dismiss="modal" onclick="showPage('checkout')"><i class="bi bi-credit-card me-2"></i>ดำเนินการชำระเงิน</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHECKOUT MODAL (as section, toggled)
+============================================================ -->
+<div id="page-checkout" class="page-section" style="padding-top:80px;">
+  <div class="container py-5">
+    <div class="section-title mb-5">ชำระเงิน</div>
+    <div class="row g-4">
+      <!-- Form -->
+      <div class="col-lg-7">
+        <div class="checkout-wrap mb-4">
+          <div class="fw-700 mb-3" style="font-size:.95rem;color:var(--dark);">ข้อมูลผู้รับสินค้า</div>
+          <div class="row g-3">
+            <div class="col-sm-6"><label class="form-label">ชื่อ</label><input class="form-control" value="สมชาย" /></div>
+            <div class="col-sm-6"><label class="form-label">นามสกุล</label><input class="form-control" value="เทคโนโลยี" /></div>
+            <div class="col-12"><label class="form-label">ที่อยู่</label><textarea class="form-control" rows="2">123/45 ถ.รัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง</textarea></div>
+            <div class="col-sm-4"><label class="form-label">จังหวัด</label>
+              <select class="form-select"><option>กรุงเทพมหานคร</option><option>เชียงใหม่</option><option>ภูเก็ต</option></select>
+            </div>
+            <div class="col-sm-4"><label class="form-label">รหัสไปรษณีย์</label><input class="form-control" value="10310" /></div>
+            <div class="col-sm-4"><label class="form-label">เบอร์โทรศัพท์</label><input class="form-control" value="081-234-5678" /></div>
+            <div class="col-12"><label class="form-label">อีเมล</label><input class="form-control" value="somchai@TechShop.th" /></div>
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="checkout-wrap">
+          <div class="fw-700 mb-3" style="font-size:.95rem;color:var(--dark);">วิธีชำระเงิน</div>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <div class="payment-option selected" onclick="selectPayment(this)">
+                <div class="pay-icon"><i class="bi bi-credit-card-2-front"></i></div>
+                <div><div class="pay-label">บัตรเครดิต / เดบิต</div><div class="pay-sub">VISA, Mastercard, JCB</div></div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="payment-option" onclick="selectPayment(this)">
+                <div class="pay-icon"><i class="bi bi-qr-code"></i></div>
+                <div><div class="pay-label">PromptPay QR</div><div class="pay-sub">สแกนจ่ายผ่านแอปธนาคาร</div></div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="payment-option" onclick="selectPayment(this)">
+                <div class="pay-icon"><i class="bi bi-bank"></i></div>
+                <div><div class="pay-label">โอนเงินธนาคาร</div><div class="pay-sub">SCB, KBANK, KTB, BBL</div></div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="payment-option" onclick="selectPayment(this)">
+                <div class="pay-icon"><i class="bi bi-truck"></i></div>
+                <div><div class="pay-label">เก็บเงินปลายทาง</div><div class="pay-sub">ชำระเมื่อรับสินค้า (+50 บาท)</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Credit Card Detail -->
+          <div class="mt-4 p-3 rounded-3" style="background:#F8F9FF;border:1.5px solid #DBEAFE;">
+            <div class="row g-3">
+              <div class="col-12"><label class="form-label">หมายเลขบัตร</label><input class="form-control" placeholder="0000 0000 0000 0000" /></div>
+              <div class="col-sm-6"><label class="form-label">วันหมดอายุ</label><input class="form-control" placeholder="MM/YY" /></div>
+              <div class="col-sm-6"><label class="form-label">CVV</label><input class="form-control" placeholder="•••" /></div>
+              <div class="col-12"><label class="form-label">ชื่อบนบัตร</label><input class="form-control" placeholder="SOMCHAI TECHNOLOGY" /></div>
+            </div>
+          </div>
+
+          <button class="btn-checkout mt-4" onclick="confirmOrder()"><i class="bi bi-shield-check me-2"></i>ยืนยันคำสั่งซื้อ</button>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="col-lg-5">
+        <div class="order-summary-card">
+          <div class="fw-700 mb-3" style="font-size:.95rem;color:var(--dark);">สรุปคำสั่งซื้อ</div>
+          <div class="order-item-line"><span>ASUS ROG Strix RTX 4080 Super</span><span class="fw-600">฿28,500</span></div>
+          <div class="order-item-line"><span>Corsair Vengeance DDR5 32GB</span><span class="fw-600">฿4,290</span></div>
+          <div class="order-item-line"><span>Logitech G Pro X Superlight</span><span class="fw-600">฿2,990</span></div>
+          <div class="divider-line"></div>
+          <div class="order-item-line"><span>ราคาสินค้า</span><span>฿35,780</span></div>
+          <div class="order-item-line"><span>ค่าจัดส่ง</span><span class="text-success">ฟรี</span></div>
+          <div class="order-item-line"><span>ส่วนลด</span><span class="text-danger">-฿500</span></div>
+          <div class="order-item-line" style="font-size:1rem;font-weight:700;color:var(--dark);border-top:2px solid var(--border);padding-top:.75rem;margin-top:.25rem;"><span>ยอดชำระ</span><span class="text-primary" style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;">฿35,280</span></div>
+
+          <div class="mt-4 p-3 rounded-3" style="background:#F0FDF4;border:1px solid #86EFAC;">
+            <div class="d-flex gap-2">
+              <i class="bi bi-shield-check text-success mt-1"></i>
+              <div>
+                <div style="font-size:.82rem;font-weight:600;color:#15803D;">ซื้อปลอดภัย 100%</div>
+                <div style="font-size:.75rem;color:#166534;">ชำระเงินผ่านระบบที่ได้รับการรับรองความปลอดภัย SSL</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <div style="font-size:.78rem;color:var(--grey);"><i class="bi bi-truck me-1"></i>จัดส่งภายใน 1–3 วันทำการ</div>
+            <div style="font-size:.78rem;color:var(--grey);margin-top:.3rem;"><i class="bi bi-arrow-return-left me-1"></i>คืนสินค้าได้ภายใน 30 วัน</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     LOGIN MODAL
+============================================================ -->
+<div class="modal fade" id="loginModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:440px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-700"><i class="bi bi-person-circle me-2"></i>เข้าสู่ระบบ</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="mb-3"><label class="form-label">อีเมล</label><input class="form-control" type="email" placeholder="somchai@email.com" /></div>
+        <div class="mb-4"><label class="form-label">รหัสผ่าน</label><input class="form-control" type="password" placeholder="••••••••" /></div>
+        <button class="btn-checkout" data-bs-dismiss="modal" onclick="showPage('profile')">เข้าสู่ระบบ</button>
+        <div class="text-center mt-3" style="font-size:.85rem;color:var(--grey);">ยังไม่มีบัญชี? <a href="#" class="text-primary fw-600">สมัครสมาชิก</a></div>
+        <div class="divider-line"></div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-secondary w-50 fw-600" style="font-size:.82rem;"><i class="bi bi-google me-1"></i>Google</button>
+          <button class="btn btn-outline-secondary w-50 fw-600" style="font-size:.82rem;"><i class="bi bi-facebook me-1"></i>Facebook</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ORDER SUCCESS MODAL
+============================================================ -->
+<div class="modal fade" id="orderSuccessModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:440px;">
+    <div class="modal-content text-center p-4">
+      <div style="width:72px;height:72px;background:#D1FAE5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem;color:#059669;">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+      <h4 class="fw-700 mb-2">สั่งซื้อสำเร็จ!</h4>
+      <p class="text-muted" style="font-size:.9rem;">คำสั่งซื้อ #TZ-2024-00843 ได้รับการยืนยันแล้ว<br>เราจะส่งอีเมลยืนยันไปที่ somchai@TechShop.th</p>
+      <div class="d-flex gap-2 mt-3">
+        <button class="btn btn-primary w-50 fw-600" data-bs-dismiss="modal" onclick="showPage('tracking')">ติดตามพัสดุ</button>
+        <button class="btn btn-outline-secondary w-50" data-bs-dismiss="modal" onclick="showPage('home')">กลับหน้าหลัก</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+/* ============================================================
+   MOCKUP DATA
+============================================================ */
+const products = [
+  { id:1, name:'ASUS ROG Strix RTX 4080 Super 16GB', brand:'ASUS', category:'GPU', price:28500, origPrice:32000, rating:4.9, reviews:248, badge:'sale', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=RTX+4080' },
+  { id:2, name:'Intel Core i9-14900K Processor', brand:'Intel', category:'CPU', price:16900, origPrice:null, rating:4.8, reviews:189, badge:'new', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=i9-14900K' },
+  { id:3, name:'Corsair Vengeance DDR5 32GB 6000MHz', brand:'Corsair', category:'RAM', price:4290, origPrice:5500, rating:4.7, reviews:312, badge:'sale', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=DDR5+32GB' },
+  { id:4, name:'Samsung 990 Pro NVMe SSD 2TB', brand:'Samsung', category:'SSD', price:5290, origPrice:6500, rating:4.9, reviews:421, badge:'sale', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=990+Pro+2TB' },
+  { id:5, name:'ASUS ROG Swift OLED PG27AQDM 27" 240Hz', brand:'ASUS', category:'Monitor', price:22900, origPrice:null, rating:4.8, reviews:156, badge:'new', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=ROG+OLED+27' },
+  { id:6, name:'Corsair K100 Air Wireless Keyboard', brand:'Corsair', category:'Keyboard', price:8990, origPrice:9990, rating:4.6, reviews:203, badge:'sale', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=K100+Air' },
+  { id:7, name:'Logitech G Pro X Superlight 2 DEX', brand:'Logitech', category:'Mouse', price:4290, origPrice:4990, rating:4.9, reviews:534, badge:'hot', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=Superlight+2' },
+  { id:8, name:'SteelSeries Arctis Nova Pro Wireless', brand:'SteelSeries', category:'Headset', price:12900, origPrice:14990, rating:4.8, reviews:278, badge:'sale', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=Arctis+Nova' },
+  { id:9, name:'AMD Ryzen 9 7950X 16-Core Processor', brand:'AMD', category:'CPU', price:19900, origPrice:23000, rating:4.9, reviews:344, badge:'sale', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=Ryzen+9+7950X' },
+  { id:10, name:'NVIDIA GeForce RTX 4060 Ti 8GB', brand:'MSI', category:'GPU', price:13900, origPrice:null, rating:4.6, reviews:198, badge:'new', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=RTX+4060+Ti' },
+  { id:11, name:'G.Skill Trident Z5 RGB DDR5 64GB', brand:'G.Skill', category:'RAM', price:8900, origPrice:10500, rating:4.7, reviews:142, badge:'sale', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=Trident+Z5' },
+  { id:12, name:'WD Black SN850X NVMe 4TB', brand:'WD', category:'SSD', price:9900, origPrice:12000, rating:4.8, reviews:267, badge:'sale', img:'https://placehold.co/240x180/EEF2FF/0055FF?text=SN850X+4TB' },
+];
+
+/* Cart data */
+let cart = [
+  { ...products[0], qty: 1 },
+  { ...products[2], qty: 2 },
+  { ...products[6], qty: 1 },
+];
+
+/* Wishlist */
+let wishlist = new Set([2, 5, 8]);
+
+/* ============================================================
+   RENDER PRODUCT CARD
+============================================================ */
+function renderCard(p, mini=false) {
+  const disc = p.origPrice ? Math.round((1 - p.price/p.origPrice)*100) : null;
+  const stars = '★'.repeat(Math.floor(p.rating)) + (p.rating % 1 >= .5 ? '½' : '');
+  const badgeHTML = p.badge === 'sale' ? `<span class="product-badge badge-sale">-${disc}%</span>`
+    : p.badge === 'new' ? `<span class="product-badge badge-new">New</span>`
+    : `<span class="product-badge badge-hot">Hot</span>`;
+  const isWish = wishlist.has(p.id);
+  return `
+  <div class="product-card h-100" data-name="${p.name.toLowerCase()}" data-cat="${p.category}" data-price="${p.price}">
+    <div class="product-img-wrap">
+      ${badgeHTML}
+      <button class="btn-wishlist ${isWish?'active':''}" onclick="toggleWish(${p.id},this)" title="Wishlist">
+        <i class="bi bi-heart${isWish?'-fill wish-on':''}"></i>
+      </button>
+      <img src="${p.img}" alt="${p.name}" loading="lazy" />
+    </div>
+    <div class="product-body">
+      <div class="product-brand">${p.brand}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="d-flex align-items-center">
+        <span class="stars">${'★'.repeat(Math.floor(p.rating))}</span>
+        <span class="rating-count">(${p.reviews})</span>
+      </div>
+      <div class="product-price-wrap">
+        <span class="price-current">฿${p.price.toLocaleString()}</span>
+        ${p.origPrice ? `<span class="price-original">฿${p.origPrice.toLocaleString()}</span>` : ''}
+        ${disc ? `<span class="price-discount">-${disc}%</span>` : ''}
+      </div>
+    </div>
+    <div class="product-footer">
+      <button class="btn-add-cart" onclick="addToCart(${p.id})"><i class="bi bi-cart-plus me-1"></i>ใส่ตะกร้า</button>
+      <button class="btn-view-detail" onclick="showPage('products')"><i class="bi bi-eye"></i></button>
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   RENDER GRIDS
+============================================================ */
+function renderHomeGrid() {
+  const el = document.getElementById('homeProductGrid');
+  if (!el) return;
+  el.innerHTML = products.slice(0, 8).map(p => `<div class="col-sm-6 col-lg-3">${renderCard(p)}</div>`).join('');
+}
+
+function renderProductGrid(list) {
+  const el = document.getElementById('productGrid');
+  const no = document.getElementById('noResult');
+  if (!el) return;
+  if (!list.length) {
+    el.innerHTML = ''; no.classList.remove('d-none'); return;
+  }
+  no.classList.add('d-none');
+  el.innerHTML = list.map(p => `<div class="col-sm-6 col-lg-4 col-xl-3">${renderCard(p)}</div>`).join('');
+}
+
+function renderWishlist() {
+  const el = document.getElementById('wishlistGrid');
+  if (!el) return;
+  const items = products.filter(p => wishlist.has(p.id));
+  el.innerHTML = items.map(p => `<div class="col-sm-6 col-md-4">${renderCard(p, true)}</div>`).join('');
+}
+
+/* ============================================================
+   FILTER & SEARCH
+============================================================ */
+function filterProducts() {
+  const q   = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  const cat = document.getElementById('catFilter')?.value || '';
+  const rng = document.getElementById('priceFilter')?.value || '';
+  let list  = products.filter(p => {
+    if (q && !p.name.toLowerCase().includes(q) && !p.brand.toLowerCase().includes(q)) return false;
+    if (cat && p.category !== cat) return false;
+    if (rng) {
+      const [lo, hi] = rng.split('-').map(Number);
+      if (p.price < lo || p.price > hi) return false;
+    }
+    return true;
+  });
+  renderProductGrid(list);
+}
+
+/* ============================================================
+   CART
+============================================================ */
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  const existing = cart.find(x => x.id === id);
+  if (existing) existing.qty++;
+  else cart.push({ ...p, qty: 1 });
+  updateCartCount();
+  const toast = new bootstrap.Toast(document.getElementById('cartToast'));
+  toast.show();
+}
+
+function updateCartCount() {
+  const count = cart.reduce((s, x) => s + x.qty, 0);
+  document.getElementById('cartCount').textContent = count;
+}
+
+function openCart() {
+  renderCart();
+  new bootstrap.Modal(document.getElementById('cartModal')).show();
+}
+
+function renderCart() {
+  const c = document.getElementById('cartItemsContainer');
+  if (!c) return;
+  if (!cart.length) { c.innerHTML = '<p class="text-muted text-center py-4">ตะกร้าว่างเปล่า</p>'; updateCartSummary(); return; }
+  c.innerHTML = cart.map((item, i) => `
+    <div class="cart-item-row">
+      <div class="cart-item-img"><img src="${item.img}" alt="" /></div>
+      <div class="flex-grow-1">
+        <div style="font-size:.85rem;font-weight:600;">${item.name}</div>
+        <div style="font-size:.75rem;color:var(--grey);">${item.brand} · ${item.category}</div>
+      </div>
+      <div class="qty-control">
+        <div class="qty-btn" onclick="changeQty(${i},-1)">−</div>
+        <div class="qty-val">${item.qty}</div>
+        <div class="qty-btn" onclick="changeQty(${i},1)">+</div>
+      </div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--primary);min-width:80px;text-align:right;">฿${(item.price*item.qty).toLocaleString()}</div>
+      <button onclick="removeFromCart(${i})" style="background:none;border:none;color:var(--grey);padding:.2rem .4rem;font-size:1.1rem;" title="ลบ"><i class="bi bi-trash3"></i></button>
+    </div>`).join('');
+  updateCartSummary();
+}
+
+function changeQty(idx, delta) {
+  cart[idx].qty += delta;
+  if (cart[idx].qty < 1) cart.splice(idx, 1);
+  renderCart();
+  updateCartCount();
+}
+
+function removeFromCart(idx) {
+  cart.splice(idx, 1);
+  renderCart();
+  updateCartCount();
+}
+
+function updateCartSummary() {
+  const sub = cart.reduce((s, x) => s + x.price * x.qty, 0);
+  const total = Math.max(0, sub - 500);
+  document.getElementById('cartSubtotal').textContent = '฿' + sub.toLocaleString();
+  document.getElementById('cartTotal').textContent = '฿' + total.toLocaleString();
+}
+
+/* ============================================================
+   WISHLIST
+============================================================ */
+function toggleWish(id, btn) {
+  if (wishlist.has(id)) {
+    wishlist.delete(id);
+    btn.classList.remove('active');
+    btn.querySelector('i').className = 'bi bi-heart';
+  } else {
+    wishlist.add(id);
+    btn.classList.add('active');
+    btn.querySelector('i').className = 'bi bi-heart-fill wish-on';
+  }
+  renderWishlist();
+}
+
+/* ============================================================
+   PAYMENT OPTION
+============================================================ */
+function selectPayment(el) {
+  document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+/* ============================================================
+   ORDER CONFIRM
+============================================================ */
+function confirmOrder() {
+  cart = [];
+  updateCartCount();
+  new bootstrap.Modal(document.getElementById('orderSuccessModal')).show();
+}
+
+/* ============================================================
+   PAGE NAVIGATION
+============================================================ */
+function showPage(name) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('page-' + name);
+  if (target) { target.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+  // update nav links
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  if (name === 'home') {
+    const link = [...document.querySelectorAll('.nav-link')].find(l => l.textContent.includes('Home'));
+    if (link) link.classList.add('active');
+  }
+}
+
+/* ============================================================
+   NAVBAR SCROLL EFFECT
+============================================================ */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('mainNav');
+  if (window.scrollY > 40) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+});
+
+/* ============================================================
+   INIT
+============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  renderHomeGrid();
+  renderProductGrid(products);
+  renderWishlist();
+  updateCartCount();
+});
+</script>
+</body>
+</html>

@@ -126,6 +126,12 @@
 
 ---
 
+## User Interface Design (Mockup)
+
+หน้าแรกของเว็บไซต์ E-Commerce Platform สำหรับจำหน่ายอุปกรณ์คอมพิวเตอร์และเกมมิ่งเกียร์ โดยออกแบบด้วย Bootstrap 5 เพื่อจำลองการใช้งานจริงของระบบ
+
+![Home Page](img/tech.jpg)
+
 ## Screenshot SourceTree
 
 ![SourceTree Commit](img/Sourcetree-commit.jpg)
