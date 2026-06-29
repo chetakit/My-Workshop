@@ -135,7 +135,10 @@
 ```mermaid
 flowchart TB
 
-subgraph CUSTOMER["CUSTOMER"]
+%% =========================
+%% CUSTOMER
+%% =========================
+subgraph CUSTOMER["👤 CUSTOMER"]
 direction LR
 A[Register / Login]
 B[Home]
@@ -150,20 +153,30 @@ I[Order History]
 A --> B --> C --> D --> E --> F --> G --> H --> I
 end
 
-subgraph ADMIN["ADMINISTRATOR"]
+%% =========================
+%% ADMIN
+%% =========================
+subgraph ADMIN["🛠️ ADMINISTRATOR"]
 direction TB
+
 AA[Admin Login]
 AB[Dashboard]
 
 AA --> AB
+
 AB --> AC[Manage Products]
 AB --> AD[Manage Categories]
 AB --> AE[Manage Orders]
 AB --> AF[Manage Users]
+
 end
 
-subgraph BACKEND["BACKEND"]
+%% =========================
+%% BACKEND
+%% =========================
+subgraph BACKEND["⚙️ BACKEND (Node.js)"]
 direction LR
+
 BA[Authentication]
 BB[Product Service]
 BC[Cart Service]
@@ -171,10 +184,15 @@ BD[Order Service]
 BE[User Service]
 BF[Admin Service]
 BG[REST API]
+
 end
 
-subgraph DATABASE["DATABASE"]
+%% =========================
+%% DATABASE
+%% =========================
+subgraph DATABASE["🗄️ DATABASE / STORAGE"]
 direction LR
+
 DA[(Users)]
 DB[(Categories)]
 DC[(Products)]
@@ -182,19 +200,23 @@ DD[(Cart)]
 DE[(Orders)]
 DF[(Order Items)]
 DG[(Payments)]
-DH[(Reviews)]
+
 end
+
+%% =========================
+%% CONNECTIONS
+%% =========================
 
 CUSTOMER --> BACKEND
 ADMIN --> BACKEND
 
 BA --> DA
-BB --> DC
 BB --> DB
+BB --> DC
 BC --> DD
 BD --> DE
 BD --> DF
+BD --> DG
 BE --> DA
 BF --> DA
-BD --> DG
 ```
