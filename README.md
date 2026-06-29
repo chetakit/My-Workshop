@@ -133,18 +133,68 @@
 ## System Architecture
 
 ```mermaid
-flowchart TD
+flowchart TB
 
-Customer --> Login
-Login --> Home
-Home --> BrowseProducts
-BrowseProducts --> ProductDetails
-ProductDetails --> AddToCart
-AddToCart --> Checkout
-Checkout --> OrderComplete
+subgraph CUSTOMER["CUSTOMER"]
+direction LR
+A[Register / Login]
+B[Home]
+C[Browse Products]
+D[Product Details]
+E[Shopping Cart]
+F[Checkout]
+G[Payment]
+H[Order Complete]
+I[Order History]
 
-Administrator --> AdminLogin
-AdminLogin --> ManageProducts
-AdminLogin --> ManageOrders
-AdminLogin --> ManageUsers
+A --> B --> C --> D --> E --> F --> G --> H --> I
+end
+
+subgraph ADMIN["ADMINISTRATOR"]
+direction TB
+AA[Admin Login]
+AB[Dashboard]
+
+AA --> AB
+AB --> AC[Manage Products]
+AB --> AD[Manage Categories]
+AB --> AE[Manage Orders]
+AB --> AF[Manage Users]
+end
+
+subgraph BACKEND["BACKEND"]
+direction LR
+BA[Authentication]
+BB[Product Service]
+BC[Cart Service]
+BD[Order Service]
+BE[User Service]
+BF[Admin Service]
+BG[REST API]
+end
+
+subgraph DATABASE["DATABASE"]
+direction LR
+DA[(Users)]
+DB[(Categories)]
+DC[(Products)]
+DD[(Cart)]
+DE[(Orders)]
+DF[(Order Items)]
+DG[(Payments)]
+DH[(Reviews)]
+end
+
+CUSTOMER --> BACKEND
+ADMIN --> BACKEND
+
+BA --> DA
+BB --> DC
+BB --> DB
+BC --> DD
+BD --> DE
+BD --> DF
+BE --> DA
+BF --> DA
+BD --> DG
 ```
