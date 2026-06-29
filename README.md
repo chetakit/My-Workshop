@@ -71,3 +71,22 @@ Customers often have difficulty searching for computer hardware and gaming acces
 - Easy to use
 - Fast response
 - Responsive Design
+
+## System Architecture
+
+```mermaid
+flowchart TD
+
+Customer --> Login
+Login --> Home
+Home --> BrowseProducts
+BrowseProducts --> ProductDetails
+ProductDetails --> AddToCart
+AddToCart --> Checkout
+Checkout --> OrderComplete
+Administrator --> AdminLogin
+AdminLogin --> ManageProducts
+AdminLogin --> ManageOrders
+AdminLogin --> ManageUsers
+
+```
