@@ -72,6 +72,31 @@ Customers often have difficulty searching for computer hardware and gaming acces
 - Fast response
 - Responsive Design
 
+## Design
+
+### Actors
+
+- Customer
+- Administrator
+
+### Customer Use Cases
+
+- Register
+- Login
+- Browse Products
+- Search Products
+- View Product Details
+- Add Products to Cart
+- Checkout
+- View Order History
+
+### Administrator Use Cases
+
+- Login
+- Manage Products
+- Manage Orders
+- Manage Users
+
 ## System Architecture
 
 ```mermaid
@@ -84,9 +109,9 @@ BrowseProducts --> ProductDetails
 ProductDetails --> AddToCart
 AddToCart --> Checkout
 Checkout --> OrderComplete
+
 Administrator --> AdminLogin
 AdminLogin --> ManageProducts
 AdminLogin --> ManageOrders
 AdminLogin --> ManageUsers
-
 ```
