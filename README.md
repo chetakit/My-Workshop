@@ -91,9 +91,15 @@
 3. พัฒนาส่วนหลังบ้านด้วย Node.js และสร้างฐานข้อมูล MySQL เพื่อใช้จัดการและเชื่อมต่อข้อมูลสินค้าและคำสั่งซื้อ
 4. ทำการทดสอบระบบแบบ Manual Testing และทำ UAT ตรวจสอบความถูกต้อง พร้อมจัดทำสรุปเพื่อนำเสนอผลงาน
 
+## User Interface Design (Home Page)
+
+ภาพหน้าหลักของระบบ E-Commerce สำหรับแสดงสินค้า หมวดหมู่ และเมนูหลักของเว็บไซต์
+
+![Home Page](img/tech.jpg)
+
 ## Screenshot SourceTree 
 
-![Logo](images/Screenshot.png)
+![SourceTree](img/Sourcetree-commit.jpg)
 
 
 ## System Architecture
