@@ -184,7 +184,7 @@ Upload --> Database
 ```
 ## 1) แผนภาพกรณีการใช้งาน (Use Case Diagram)
 
-![Logo](images/UseCase.drawio (1).png)
+![](img/UseCase.drawio%20(1).png)
 
 หน้าที่ของแผนภาพ:
 - แสดงขอบเขตของระบบ TechPulse ให้เห็นชัดว่าใครทำอะไรได้บ้าง
