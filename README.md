@@ -204,235 +204,642 @@ Upload --> Database
 
 หมายเหตุ: แผนภาพนี้อ้างอิงชื่อโครงสร้างข้อมูลจริงในฐานข้อมูลของโครงการ
 
+## Customer Purchase Flow
+
 ```mermaid
-classDiagram
+sequenceDiagram
 
-%% =================================
-%% USER
-%% =================================
+autonumber
 
-class User{
-+userId : int
-+name : string
-+email : string
-+password : string
-+phone : string
-+address : string
+actor Customer
 
-+register()
-+login()
-+logout()
-+updateProfile()
-}
+participant Frontend as React Frontend
+participant ProductController
+participant CartController
+participant AddressController
+participant OrderController
+participant PaymentController
+participant DB as MySQL Database
 
-class Customer{
-+browseProducts()
-+searchProducts()
-+filterProducts()
-+viewProductDetail()
+%% ==========================
+%% Browse Products
+%% ==========================
 
-+manageShoppingCart()
+Customer->>Frontend: Browse Products
 
-+checkout()
-+viewOrders()
+activate Frontend
 
-+viewWarranty()
-+submitWarrantyClaim()
-}
+Frontend->>ProductController: GET /products
 
-class Admin{
-+manageProducts()
-+manageCategories()
-+manageOrders()
-+viewCustomerInformation()
-+manageWarrantyClaims()
-+viewDashboard()
-}
+activate ProductController
 
-class SuperAdmin{
-+manageAdminAccounts()
-+manageRoles()
-+manageSystemSettings()
-+viewSystemLogs()
-}
+ProductController->>DB: Query Products
 
-User <|-- Customer
-User <|-- Admin
-Admin <|-- SuperAdmin
+activate DB
 
-%% =================================
-%% PRODUCT
-%% =================================
+DB-->>ProductController: Product List
 
-class Product{
+deactivate DB
 
-+productId : int
-+name : string
-+description : string
-+price : decimal
-+stock : int
-+status : string
+ProductController-->>Frontend: Return Products
 
-}
+deactivate ProductController
 
-class Category{
+Frontend-->>Customer: Display Product List
 
-+categoryId : int
-+categoryName : string
+deactivate Frontend
 
-}
+%% ==========================
+%% View Product Detail
+%% ==========================
 
-Category "1" --> "*" Product
+Customer->>Frontend: Select Product
 
-%% =================================
-%% SHOPPING CART
-%% =================================
+activate Frontend
 
-class ShoppingCart{
+Frontend->>ProductController: GET /products/{id}
 
-+cartId : int
+activate ProductController
 
-+addItem()
+ProductController->>DB: Query Product Detail
 
-+updateItem()
+activate DB
 
-+removeItem()
+DB-->>ProductController: Product Detail
 
-+clearCart()
+deactivate DB
 
-}
+ProductController-->>Frontend: Return Product Detail
 
-class CartItem{
+deactivate ProductController
 
-+quantity : int
+Frontend-->>Customer: Display Product Detail
 
-+subtotal : decimal
+deactivate Frontend
 
-}
+%% ==========================
+%% Add to Cart
+%% ==========================
 
-Customer "1" --> "1" ShoppingCart
+Customer->>Frontend: Add to Cart
 
-ShoppingCart "1" *-- "*" CartItem
+activate Frontend
 
-CartItem "*" --> "1" Product
+Frontend->>CartController: POST /cart
 
-%% =================================
-%% ORDER
-%% =================================
+activate CartController
 
-class Order{
+CartController->>DB: Save Cart Item
 
-+orderId : int
+activate DB
 
-+orderDate : Date
+DB-->>CartController: Cart Updated
 
-+status : string
+deactivate DB
 
-+totalAmount : decimal
+CartController-->>Frontend: Cart Updated
 
-+placeOrder()
+deactivate CartController
 
-+trackOrder()
+Frontend-->>Customer: Display Shopping Cart
 
-}
+deactivate Frontend
 
-class OrderItem{
+%% ==========================
+%% Checkout
+%% ==========================
 
-+quantity : int
+Customer->>Frontend: Checkout
 
-+price : decimal
+activate Frontend
 
-}
+Frontend->>AddressController: GET /addresses
 
-Customer "1" --> "*" Order
+activate AddressController
 
-Order "1" *-- "*" OrderItem
+AddressController->>DB: Retrieve Customer Addresses
 
-OrderItem "*" --> "1" Product
+activate DB
 
-%% =================================
-%% PAYMENT
-%% =================================
+DB-->>AddressController: Address List
 
-class Payment{
+deactivate DB
 
-+paymentId : int
+AddressController-->>Frontend: Return Address List
 
-+paymentMethod : string
+deactivate AddressController
 
-+amount : decimal
+Frontend-->>Customer: Display Shipping Addresses
 
-+paymentStatus : string
+Customer->>Frontend: Select Shipping Address
 
-+processPayment()
+Frontend->>OrderController: Submit addressId
 
-}
+activate OrderController
 
-Order "1" --> "1" Payment
+OrderController-->>Frontend: Address Valid
 
-%% =================================
-%% WARRANTY
-%% =================================
+Frontend->>OrderController: Select Payment Method
 
-class Warranty{
+OrderController-->>Frontend: Payment Method Accepted
 
-+warrantyId : int
+deactivate OrderController
 
-+serialNumber : string
+%% ==========================
+%% Place Order
+%% ==========================
 
-+expiryDate : Date
+Customer->>Frontend: Place Order
 
-+status : string
+Frontend->>OrderController: Create Order
 
-}
+activate OrderController
 
-class WarrantyClaim{
+OrderController->>DB: Insert Order
 
-+claimId : int
+activate DB
 
-+claimDate : Date
+DB-->>OrderController: Order ID
 
-+description : string
+deactivate DB
 
-+claimStatus : string
+loop For each Cart Item
 
-}
+OrderController->>DB: Insert Order Item
 
-OrderItem "1" --> "1" Warranty
+DB-->>OrderController: Success
 
-Warranty "1" --> "*" WarrantyClaim
+end
 
-%% =================================
-%% DASHBOARD
-%% =================================
+%% ==========================
+%% Payment
+%% ==========================
 
-class Dashboard{
+OrderController->>PaymentController: Process Payment
 
-+viewSales()
+activate PaymentController
 
-+viewRevenue()
+PaymentController->>DB: Update Payment Status
 
-+viewOrders()
+activate DB
 
-+viewCustomers()
+DB-->>PaymentController: Payment Completed
 
-}
+deactivate DB
 
-Admin --> Dashboard
+alt Payment Success
 
-%% =================================
-%% ROLE
-%% =================================
+PaymentController-->>OrderController: Payment Success
 
-class Role{
+OrderController->>DB: Update Order Status
 
-+roleId : int
+DB-->>OrderController: Paid
 
-+roleName : string
+OrderController->>DB: Clear Shopping Cart
 
-}
+DB-->>OrderController: Cart Cleared
 
-SuperAdmin --> Role
+OrderController-->>Frontend: Order Completed
+
+Frontend-->>Customer: Display Order Success
+
+else Payment Failed
+
+PaymentController-->>OrderController: Payment Failed
+
+OrderController-->>Frontend: Display Payment Failed
+
+Frontend-->>Customer: Retry Payment
+
+end
+
+deactivate PaymentController
+
+deactivate OrderController
+
+deactivate Frontend
+
+```
+
+---
+
+### Warranty Claim Flow (Customer)
+
+```mermaid
+sequenceDiagram
+
+autonumber
+
+actor Customer
+
+participant Frontend as React Frontend
+participant WarrantyController
+participant DB as MySQL Database
+
+%% ======================================
+%% View Order History
+%% ======================================
+
+Customer->>Frontend: View My Orders
+
+activate Frontend
+
+Frontend->>WarrantyController: GET /orders
+
+activate WarrantyController
+
+WarrantyController->>DB: Retrieve Customer Orders
+
+activate DB
+
+DB-->>WarrantyController: Order List
+
+deactivate DB
+
+WarrantyController-->>Frontend: Return Order List
+
+Frontend-->>Customer: Display My Orders
+
+deactivate WarrantyController
+
+deactivate Frontend
+
+%% ======================================
+%% View Warranty
+%% ======================================
+
+Customer->>Frontend: View Warranty Information
+
+activate Frontend
+
+Frontend->>WarrantyController: GET /warranty/{orderId}
+
+activate WarrantyController
+
+WarrantyController->>DB: Retrieve Warranty Information
+
+activate DB
+
+DB-->>WarrantyController: Warranty Details
+
+deactivate DB
+
+WarrantyController-->>Frontend: Return Warranty Information
+
+Frontend-->>Customer: Display Warranty Details
+
+deactivate WarrantyController
+
+deactivate Frontend
+
+%% ======================================
+%% Submit Warranty Claim
+%% ======================================
+
+Customer->>Frontend: Submit Warranty Claim
+
+activate Frontend
+
+Frontend->>WarrantyController: POST /warranty/claim
+
+activate WarrantyController
+
+WarrantyController->>DB: Save Warranty Claim
+
+activate DB
+
+DB-->>WarrantyController: Claim Created
+
+deactivate DB
+
+WarrantyController-->>Frontend: Warranty Claim Submitted
+
+Frontend-->>Customer: Display Claim Success
+
+deactivate WarrantyController
+
+deactivate Frontend
+```
+
+---
+
+### Manage Warranty Claim Flow (Admin)
+
+
+```mermaid
+sequenceDiagram
+
+autonumber
+
+actor Admin
+
+participant Frontend as React Frontend
+participant WarrantyController
+participant DB as MySQL Database
+
+%% ======================================
+%% View Warranty Claims
+%% ======================================
+
+Admin->>Frontend: Open Warranty Claims
+
+activate Frontend
+
+Frontend->>WarrantyController: GET /warranty/claims
+
+activate WarrantyController
+
+WarrantyController->>DB: Retrieve Warranty Claims
+
+activate DB
+
+DB-->>WarrantyController: Warranty Claim List
+
+deactivate DB
+
+WarrantyController-->>Frontend: Return Claim List
+
+Frontend-->>Admin: Display Warranty Claims
+
+deactivate WarrantyController
+
+deactivate Frontend
+
+%% ======================================
+%% View Claim Detail
+%% ======================================
+
+Admin->>Frontend: Select Warranty Claim
+
+activate Frontend
+
+Frontend->>WarrantyController: GET /warranty/claims/{claimId}
+
+activate WarrantyController
+
+WarrantyController->>DB: Retrieve Claim Detail
+
+activate DB
+
+DB-->>WarrantyController: Claim Detail
+
+deactivate DB
+
+WarrantyController-->>Frontend: Return Claim Detail
+
+Frontend-->>Admin: Display Claim Detail
+
+deactivate WarrantyController
+
+deactivate Frontend
+
+%% ======================================
+%% Review Warranty Claim
+%% ======================================
+
+Admin->>Frontend: Review Warranty Claim
+
+activate Frontend
+
+Frontend->>WarrantyController: Update Claim Status
+
+activate WarrantyController
+
+alt Claim Approved
+
+WarrantyController->>DB: Update Status = Approved
+
+activate DB
+
+DB-->>WarrantyController: Update Successful
+
+deactivate DB
+
+WarrantyController-->>Frontend: Claim Approved
+
+Frontend-->>Admin: Display Approval Success
+
+else Claim Rejected
+
+WarrantyController->>DB: Update Status = Rejected
+
+activate DB
+
+DB-->>WarrantyController: Update Successful
+
+deactivate DB
+
+WarrantyController-->>Frontend: Claim Rejected
+
+Frontend-->>Admin: Display Rejection Success
+
+end
+
+deactivate WarrantyController
+
+deactivate Frontend
+```
+
+---
+
+### Admin Add Product Flow
+
+```mermaid
+sequenceDiagram
+
+autonumber
+
+actor Admin
+
+participant Frontend as React Frontend
+participant ProductController
+participant UploadModule
+participant DB as MySQL Database
+participant Storage as Uploads Folder
+
+%% ======================================
+%% Open Product Management
+%% ======================================
+
+Admin->>Frontend: Open Product Management
+
+activate Frontend
+
+Frontend->>ProductController: GET /products
+
+activate ProductController
+
+ProductController->>DB: Retrieve Product List
+
+activate DB
+
+DB-->>ProductController: Product List
+
+deactivate DB
+
+ProductController-->>Frontend: Return Product List
+
+Frontend-->>Admin: Display Product List
+
+deactivate ProductController
+
+deactivate Frontend
+
+%% ======================================
+%% Add New Product
+%% ======================================
+
+Admin->>Frontend: Add New Product
+
+activate Frontend
+
+Frontend->>ProductController: Enter Product Information
+
+activate ProductController
+
+%% ======================================
+%% Upload Image
+%% ======================================
+
+Frontend->>UploadModule: Upload Product Image
+
+activate UploadModule
+
+UploadModule->>Storage: Save Image File
+
+activate Storage
+
+Storage-->>UploadModule: Upload Successful
+
+deactivate Storage
+
+UploadModule-->>ProductController: Return Image Path
+
+deactivate UploadModule
+
+%% ======================================
+%% Save Product
+%% ======================================
+
+ProductController->>DB: Save Product Information
+
+activate DB
+
+DB-->>ProductController: Product Created
+
+deactivate DB
+
+ProductController-->>Frontend: Product Created Successfully
+
+Frontend-->>Admin: Display Success Message
+
+deactivate ProductController
+
+deactivate Frontend
+```
+
+---
+
+### Admin Manage Order Flow
+
+```mermaid
+sequenceDiagram
+
+autonumber
+
+actor Admin
+
+participant Frontend as React Frontend
+participant ProductController
+participant UploadModule
+participant Storage as Uploads Folder
+participant DB as MySQL Database
+
+%% ==========================================
+%% Open Product Management
+%% ==========================================
+
+Admin->>Frontend: Open Product Management
+
+activate Frontend
+
+Frontend->>ProductController: Request Product List
+
+activate ProductController
+
+ProductController->>DB: Retrieve Products
+
+activate DB
+
+DB-->>ProductController: Product List
+
+deactivate DB
+
+ProductController-->>Frontend: Return Product List
+
+Frontend-->>Admin: Display Product Management Page
+
+deactivate ProductController
+
+deactivate Frontend
+
+%% ==========================================
+%% Add New Product
+%% ==========================================
+
+Admin->>Frontend: Click Add Product
+
+activate Frontend
+
+Frontend-->>Admin: Display Product Form
+
+Admin->>Frontend: Enter Product Information
+
+%% ==========================================
+%% Upload Image
+%% ==========================================
+
+Admin->>Frontend: Select Product Image
+
+Frontend->>UploadModule: Upload Image
+
+activate UploadModule
+
+UploadModule->>Storage: Save Image File
+
+activate Storage
+
+Storage-->>UploadModule: Image Saved
+
+deactivate Storage
+
+UploadModule-->>Frontend: Return Image Path
+
+deactivate UploadModule
+
+%% ==========================================
+%% Save Product
+%% ==========================================
+
+Frontend->>ProductController: Submit Product Data
+
+activate ProductController
+
+ProductController->>DB: Save Product Information
+
+activate DB
+
+DB-->>ProductController: Product Created
+
+deactivate DB
+
+ProductController-->>Frontend: Return Success
+
+Frontend-->>Admin: Display Product Created Successfully
+
+deactivate ProductController
+
+deactivate Frontend
 ```
 
 หน้าที่ของแผนภาพ:
