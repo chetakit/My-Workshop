@@ -163,11 +163,7 @@
 4. ทำการทดสอบระบบแบบ Manual Testing และทำ UAT ตรวจสอบความถูกต้อง พร้อมจัดทำสรุปเพื่อนำเสนอผลงาน
 
 
-## User Interface Design (Home Page)
 
-ภาพหน้าหลักของระบบ E-Commerce สำหรับแสดงสินค้า หมวดหมู่ และเมนูหลักของเว็บไซต์
-
-![Home Page](img/tech.jpg)
 
 ## Screenshot SourceTree 
 
