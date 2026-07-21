@@ -2,6 +2,7 @@
 
 ## ลิ้งหน้าเว็ป
 - [Document](https://rachapoomthu-max.github.io/WorkShop/)
+- [DataSchema](/Data_Schema_Formatted.md)
 - [LinkWeb](https://moo-tle-com-kub-ex3e.vercel.app/)
 - [กระบวนการทดสอบ UAT](https://rachapoomthu-max.github.io/WorkShop/uat_checklist.html)
 
@@ -161,6 +162,7 @@
 2. เขียนโค้ดส่วนหน้าบ้านด้วย React เพื่อสร้างหน้าจอแสดงสินค้า หมวดหมู่ ตะกร้าสินค้า และหน้าจำลองสั่งซื้อ
 3. พัฒนาส่วนหลังบ้านด้วย Node.js และสร้างฐานข้อมูล MySQL เพื่อใช้จัดการและเชื่อมต่อข้อมูลสินค้าและคำสั่งซื้อ
 4. ทำการทดสอบระบบแบบ Manual Testing และทำ UAT ตรวจสอบความถูกต้อง พร้อมจัดทำสรุปเพื่อนำเสนอผลงาน
+
 
 
 
